@@ -23,10 +23,10 @@ public class Main {
         System.out.println("\n Результаты задач: ");
         for (int i = 0; i < 100; i++) {
             String taskName = "task" + i;
-            System.out.println("Название задачи: " + dataProcessor.getResult(taskName).orElse(null));
+            System.out.println("Название задачи: " + taskName + ", результат: "
+                    + dataProcessor.getResult(taskName).orElse(null));
         }
 
         dataProcessor.shutdown();
-        dataProcessor.awaitTermination();
     }
 }

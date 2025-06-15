@@ -41,26 +41,13 @@ public class DataProcessor {
     }
 
     public Optional<Integer> getResult(String taskName) {
-        Future<Integer> future = futures.get(taskName);
-
-        if (future == null) {
-            return Optional.empty(); // такой задачи нет
-        }
-
-        if (future.isDone()) {
-            synchronized (results) {
-                return Optional.ofNullable(results.get(taskName));
-            }
-        } else {
-            return Optional.empty(); // ещё не готово
+        synchronized (results) {
+            return Optional.ofNullable(results.get(taskName));
         }
     }
 
     public void shutdown() {
         executor.shutdown();
-    }
-
-    public void awaitTermination() {
         try {
             if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
                 executor.shutdownNow();
